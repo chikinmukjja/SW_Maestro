@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/my_best_layout">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="lank2"
+        android:id="@+id/lanktext2"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textSize="15dp" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="time2"
+        android:id="@+id/timetext2"
+        android:layout_weight="2"
+        android:textSize="10dp"
+        android:gravity="center" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="name2"
+        android:id="@+id/nametext2"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:textSize="10dp" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="score2"
+        android:id="@+id/scoretext2"
+        android:layout_weight="1"
+        android:textSize="10dp"
+        android:gravity="center" />
+</LinearLayout>
