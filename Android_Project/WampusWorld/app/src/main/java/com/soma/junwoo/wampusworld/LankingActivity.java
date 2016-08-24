@@ -128,7 +128,7 @@ public class LankingActivity extends AppCompatActivity {
             post.enqueue(new Callback<Lanking>() {
                 @Override
                 public void onResponse(Call<Lanking> call, Response<Lanking> response) {
-                    Toast.makeText(getApplicationContext(), response.body().toString(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), response.body().toString(), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override

@@ -42,41 +42,45 @@ public class LoginActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
 
         LoginButton facebookLoginButton = (LoginButton) findViewById(R.id.facebook_login_button);
+//        String arr[] = new String[] {"t1", "t2", "t3"};
         List<String> permissionNeeds = Arrays.asList("user_photos", "email", "user_birthday", "public_profile");
 
         if (facebookLoginButton != null) {
             facebookLoginButton.setReadPermissions(permissionNeeds);
 
             facebookLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
                 @Override
                 public void onSuccess(final LoginResult result) {
 
                     GraphRequest request;
 
-                    request = GraphRequest.newMeRequest(result.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                        request = GraphRequest.newMeRequest(result.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
 
-                        @Override
-                        public void onCompleted(JSONObject user, GraphResponse response) {
+                            @Override
+                            public void onCompleted(JSONObject user, GraphResponse response) {
 
-                            if (response.getError() != null) {
+                                if (response.getError() != null) {
 
-                            } else {
-                                Log.i("TAG", "user: " + user.toString());
-                                Log.i("TAG", "userid: " + user.optString("id"));
-                                Log.i("TAG", "AccessToken: " + result.getAccessToken().getToken());
-                                setResult(RESULT_OK);
+                                } else {
+                                    String str = String.format("user: %s, id:%s, token:%s", user, user.optString("id"), result.getAccessToken().getToken());
+                                    Log.i("LoginActivity", str);
+                                    Log.i("TAG", "user: " + user.toString());
+    //                                Log.i("TAG", "userid: " + user.optString("id"));
+    //                                Log.i("TAG", "AccessToken: " + result.getAccessToken().getToken());
+                                    setResult(RESULT_OK);
 
-                                Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(getApplicationContext(),
-                                        PlayActivity.class);
-                                intent.putExtra("id",user.optString("id"));
-                                intent.putExtra("name",user.optString("name"));
-                                startActivity(intent);
+                                    Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_LONG).show();
+                                    Intent intent = new Intent(getApplicationContext(),
+                                            PlayActivity.class);
+                                    intent.putExtra("id",user.optString("id"));
+                                    intent.putExtra("name",user.optString("name"));
+                                    startActivity(intent);
+                                }
+
                             }
 
-                        }
-
-                    });
+                        });
 
                     Bundle parameters = new Bundle();
                     parameters.putString("fields", "id,name,email,gender,birthday");

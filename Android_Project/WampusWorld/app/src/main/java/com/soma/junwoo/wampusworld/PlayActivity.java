@@ -223,17 +223,19 @@ public class PlayActivity extends AppCompatActivity {
         switch(_stateBtn.inner)
         {
             case 0://empty
+            {
                 sensingMap(_stateBtn);
                 movePlayer(_stateBtn);
                 _stateBtn.inner = 1;
                 break;
-
+            }
             case -1://hole
-                Toast.makeText(getApplicationContext(),"hole!! Dead",Toast.LENGTH_SHORT).show();
+            {
+                Toast.makeText(getApplicationContext(), "hole!! Dead", Toast.LENGTH_SHORT).show();
                 StopTimer();
                 failurePopUp(-1);
                 return true;
-
+            }
             case -2://wampus
                 Toast.makeText(getApplicationContext(),"Wampus!! Dead",Toast.LENGTH_SHORT).show();
                 StopTimer();
@@ -272,33 +274,13 @@ public class PlayActivity extends AppCompatActivity {
 
         }
 
-
-
         return true;
-
     }
 
     public void failurePopUp(int stateInner) {
-
-        Context mContext = getApplicationContext();
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-
-        //R.layout.dialog는 xml 파일명이고  R.id.popup은 보여줄 레이아웃 아이디
-        View layout = inflater.inflate(R.layout.dialog, (ViewGroup) findViewById(R.id.failureView));
-        AlertDialog.Builder aDialog = new AlertDialog.Builder(PlayActivity.this);
-        if(stateInner == -1){
-            layout.setBackgroundResource(R.drawable.bar_back_hole);
-        }else{
-            layout.setBackgroundResource(R.drawable.bar_back_monster);
-        }
-
-        aDialog.setTitle("GAME OVER"); //타이틀바 제목
-        aDialog.setView(layout); //dialog.xml 파일을 뷰로 셋팅
-
-        //그냥 닫기버튼을 위한 부분
-        aDialog.setNegativeButton("RESET", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-
+        Util.failurePopUp(this, stateInner, new Util.OnPopupResponse() {
+            @Override
+            public void onResponse() {
                 initializeMap(states);
                 makeMap(states);
                 if(renderMap(states.get(4*DIMENSION))) Log.i("D","redermap true");
@@ -307,9 +289,40 @@ public class PlayActivity extends AppCompatActivity {
                 btnText = false;
             }
         });
-        //팝업창 생성
-        AlertDialog ad = aDialog.create();
-        ad.show();//보여줌!
+
+//        Util u = new Util();
+//        Util.PopupRespose p = new Util.PopupRespose();
+
+//        Context mContext = getApplicationContext();
+//        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
+//
+//        //R.layout.dialog는 xml 파일명이고  R.id.popup은 보여줄 레이아웃 아이디
+//        View layout = inflater.inflate(R.layout.dialog, (ViewGroup) findViewById(R.id.failureView));
+//        AlertDialog.Builder aDialog = new AlertDialog.Builder(this);
+//        if(stateInner == -1){
+//            layout.setBackgroundResource(R.drawable.bar_back_hole);
+//        }else{
+//            layout.setBackgroundResource(R.drawable.bar_back_monster);
+//        }
+//
+//        aDialog.setTitle("GAME OVER"); //타이틀바 제목
+//        aDialog.setView(layout); //dialog.xml 파일을 뷰로 셋팅
+//
+//        //그냥 닫기버튼을 위한 부분
+//        aDialog.setNegativeButton("RESET", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//                initializeMap(states);
+//                makeMap(states);
+//                if(renderMap(states.get(4*DIMENSION))) Log.i("D","redermap true");
+//                StartTimer(1);
+//                startButton.setText("RESET");
+//                btnText = false;
+//            }
+//        });
+//        //팝업창 생성
+//        AlertDialog ad = aDialog.create();
+//        ad.show();//보여줌!
     }
 
     public void successPopUp(final int score) {
@@ -366,9 +379,9 @@ public class PlayActivity extends AppCompatActivity {
         int empty = 0;
         int hole = 0;
         int wampus = 0;
-
+        Random rand = new Random();
         for(int i=0;i<_states.size();i++){
-            Random rand = new Random();
+
             int num = rand.nextInt(3); //0 1 2
 
             switch(num)
@@ -408,6 +421,7 @@ public class PlayActivity extends AppCompatActivity {
     {
         for(int i=0;i<_states.size();i++)
         {
+            WampusState s = _states.get(i);
             _states.get(i).imgbtn.setImageResource(R.drawable.bar_back);
             _states.get(i).isActivated = false;
             _states.get(i).past = false;
@@ -461,9 +475,11 @@ public class PlayActivity extends AppCompatActivity {
         curState = _stateBtn;
 
     }
-
+java -Dname=Junwoo Main
     public void sensingMap(WampusState _stateBtn)
     {
+        Integer intObj = 10;
+        int iValue = intObj;
         String message = "";
 
         for(int i=0;i<4;i++)
@@ -487,7 +503,9 @@ public class PlayActivity extends AppCompatActivity {
 
         }
 
-        if(message != "")
+//        if(message != "")
+
+        if("".equals(message))
             Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
 
     }
